@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['report_id', 'user_id', 'status', 'note', 'photo'])]
 class ReportHistory extends Model
 {
+    /**
+     * @var list<string>
+     */
+    protected $fillable = ['report_id', 'user_id', 'status', 'note', 'photo'];
+
     /**
      * @return BelongsTo<Report, $this>
      */

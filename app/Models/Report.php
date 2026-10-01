@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Database\Factories\ReportFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,15 +10,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable([
-    'report_number', 'user_id', 'area_id', 'category_id',
-    'location_detail', 'description', 'urgency', 'status',
-    'photo', 'assigned_to', 'reported_at', 'started_at', 'completed_at',
-])]
 class Report extends Model
 {
     /** @use HasFactory<ReportFactory> */
     use HasFactory;
+
+    /**
+     * @var list<string>
+     */
+    protected $fillable = [
+        'report_number', 'user_id', 'area_id', 'category_id',
+        'location_detail', 'description', 'urgency', 'status',
+        'photo', 'assigned_to', 'reported_at', 'started_at', 'completed_at',
+    ];
 
     /**
      * @var array<string, string>

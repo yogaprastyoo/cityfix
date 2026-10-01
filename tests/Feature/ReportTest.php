@@ -18,7 +18,7 @@ function validReportPayload(array $overrides = []): array
         'location_detail' => 'Toilet lantai 2',
         'description' => 'Keran terus mengeluarkan air.',
         'urgency' => 'medium',
-        'photo' => UploadedFile::fake()->image('keran-bocor.jpg', 800, 600),
+        'photo' => UploadedFile::fake()->create('keran-bocor.jpg', 200, 'image/jpeg'),
         ...$overrides,
     ];
 }
@@ -80,7 +80,7 @@ test('photo larger than 5 MB is rejected', function () {
     $user = User::factory()->reporter()->create();
 
     $response = $this->actingAs($user)->post('/reports', validReportPayload([
-        'photo' => UploadedFile::fake()->image('besar.jpg')->size(6000),
+        'photo' => UploadedFile::fake()->create('besar.jpg', 6000, 'image/jpeg'),
     ]));
 
     $response->assertSessionHasErrors('photo');

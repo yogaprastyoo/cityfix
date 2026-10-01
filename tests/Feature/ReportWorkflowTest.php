@@ -93,7 +93,7 @@ test('technician can complete task with completion photo', function () {
     $this->actingAs($technician)
         ->post(route('reports.status', $report), [
             'status' => 'completed',
-            'completion_photo' => UploadedFile::fake()->image('selesai.jpg'),
+            'completion_photo' => UploadedFile::fake()->create('selesai.jpg', 200, 'image/jpeg'),
         ])
         ->assertSessionHasNoErrors();
 
@@ -124,7 +124,7 @@ test('status cannot jump from reported to completed', function () {
     $this->actingAs($verifier)
         ->post(route('reports.status', $report), [
             'status' => 'completed',
-            'completion_photo' => UploadedFile::fake()->image('selesai.jpg'),
+            'completion_photo' => UploadedFile::fake()->create('selesai.jpg', 200, 'image/jpeg'),
         ])
         ->assertSessionHasErrors('status');
 
@@ -143,7 +143,7 @@ test('full workflow records complete history', function () {
     $this->actingAs($technician)->post(route('reports.status', $report), ['status' => 'in_progress']);
     $this->actingAs($technician)->post(route('reports.status', $report), [
         'status' => 'completed',
-        'completion_photo' => UploadedFile::fake()->image('selesai.jpg'),
+        'completion_photo' => UploadedFile::fake()->create('selesai.jpg', 200, 'image/jpeg'),
     ]);
 
     expect($report->histories()->orderBy('id')->pluck('status')->all())

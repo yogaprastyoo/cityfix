@@ -3,16 +3,22 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
-use Illuminate\Console\Attributes\Description;
-use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
-#[Signature('cityfix:create-admin {--name= : Nama admin} {--email= : Email admin}')]
-#[Description('Buat akun admin CityFix (production) dengan password kuat, wajib diganti saat login pertama')]
 class CreateAdminUser extends Command
 {
+    /**
+     * @var string
+     */
+    protected $signature = 'cityfix:create-admin {--name= : Nama admin} {--email= : Email admin}';
+
+    /**
+     * @var string
+     */
+    protected $description = 'Buat akun admin CityFix (production) dengan password kuat, wajib diganti saat login pertama';
+
     /**
      * Execute the console command.
      */
