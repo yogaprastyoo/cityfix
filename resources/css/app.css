@@ -1,0 +1,23 @@
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import 'admin-lte/dist/css/adminlte.min.css';
+/* CITYFIX CUSTOM STYLE */
+body {
+font-family: 'Arial', sans-serif;
+}
+.brand-link {
+font-weight: 600;
+}
+.cityfix-title {
+font-weight: 600;
+}
+.content-header h1 {
+font-size: 1.6rem;
+font-weight: 600;
+}
+/* Mobile: tombol submit selebar layar agar mudah ditekan */
+@media (max-width: 575.98px) {
+.btn-block-xs {
+display: block;
+width: 100%;
+}
+}
