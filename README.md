@@ -71,10 +71,11 @@ Semua perintah harus menampilkan nomor versi. `php -v` harus menunjukkan **PHP 8
 
 ### 3.1 Download project
 
-1. Buka https://github.com/yogaprastyoo/cityfix
-2. Klik tombol hijau **`<> Code`** → **Download ZIP**.
-3. Klik kanan file `cityfix-main.zip` → **Extract All...** → **Extract**.
-4. Pindahkan folder hasil extract ke tempat yang mudah dicari, misalnya `D:\cityfix-main`.
+1. Klik link ini untuk download: **https://github.com/yogaprastyoo/cityfix/archive/refs/heads/main.zip**
+2. Klik kanan file `cityfix-main.zip` → **Extract All...** → **Extract**.
+3. Pindahkan folder hasil extract ke tempat yang mudah dicari, misalnya `D:\cityfix-main`.
+
+> Jika link tidak bisa dibuka, buka https://github.com/yogaprastyoo/cityfix lalu klik tombol hijau **`<> Code`** → **Download ZIP**.
 
 > ⚠️ Kadang hasil extract berisi folder di dalam folder (`cityfix-main\cityfix-main`). Pakai folder yang **di dalamnya langsung ada** file `artisan`, `composer.json`, dan folder `app`.
 
