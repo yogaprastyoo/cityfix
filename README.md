@@ -1,58 +1,196 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CityFix Bumi Sholawat
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi pelaporan dan penanganan kerusakan fasilitas, dibangun dengan **Laravel 12**.
 
-## About Laravel
+Panduan ini ditulis untuk menjalankan CityFix di komputer sendiri (Windows + **XAMPP**). Secara bawaan aplikasi memakai database **SQLite**, jadi kamu **tidak perlu menyalakan MySQL** untuk mulai.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 1. Yang Harus Dipasang
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Aplikasi | Versi | Unduh |
+|---|---|---|
+| XAMPP | PHP **8.2** atau lebih baru | https://www.apachefriends.org/download.html |
+| Composer | terbaru | https://getcomposer.org/Composer-Setup.exe |
+| Node.js | **20.19+** atau **22.12+** (pilih versi LTS) | https://nodejs.org |
+| Git | terbaru | https://git-scm.com/download/win |
 
-## Learning Laravel
+> ⚠️ PHP **8.1 ke bawah tidak bisa**. Jika XAMPP-mu masih versi lama, pasang ulang XAMPP versi 8.2.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 2. Persiapan XAMPP (cukup sekali)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 2.1 Daftarkan PHP XAMPP ke PATH
 
-## Agentic Development
+Supaya perintah `php` bisa dipakai di terminal:
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+1. Tekan tombol **Windows**, ketik **"environment variables"**, buka **Edit the system environment variables**.
+2. Klik **Environment Variables...**
+3. Di bagian **System variables**, pilih **Path** lalu klik **Edit**.
+4. Klik **New**, isi `C:\xampp\php`, lalu **OK** di semua jendela.
 
-```bash
-composer require laravel/boost --dev
+### 2.2 Aktifkan ekstensi PHP
 
-php artisan boost:install
+1. Buka **XAMPP Control Panel** → baris **Apache** → **Config** → **PHP (php.ini)**.
+2. Cari baris-baris berikut (tekan `Ctrl + F`). Jika di depannya ada tanda titik koma `;`, **hapus** titik komanya:
+
+   ```ini
+   extension=curl
+   extension=fileinfo
+   extension=mbstring
+   extension=openssl
+   extension=pdo_sqlite
+   extension=sqlite3
+   extension=zip
+   ```
+
+   Contoh: `;extension=zip` diubah menjadi `extension=zip`.
+
+3. Simpan file `php.ini`.
+
+### 2.3 Pasang Composer
+
+Jalankan `Composer-Setup.exe`. Saat ditanya lokasi PHP, pilih **`C:\xampp\php\php.exe`**.
+
+### 2.4 Cek semuanya
+
+**Tutup lalu buka lagi** terminal (Command Prompt / PowerShell / terminal VS Code), kemudian jalankan:
+
+```sh
+php -v
+composer -V
+node -v
+npm -v
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Semua perintah harus menampilkan nomor versi. `php -v` harus menunjukkan **PHP 8.2** atau lebih baru.
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 3. Instalasi Project
 
-## Code of Conduct
+Jalankan perintah berikut **satu per satu** di terminal:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```sh
+# 1. Ambil source code
+git clone https://github.com/yogaprastyoo/cityfix.git
+cd cityfix
 
-## Security Vulnerabilities
+# 2. Pasang library PHP
+composer install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 3. Buat file pengaturan
+copy .env.example .env
+php artisan key:generate
 
-## License
+# 4. Buat database + data awal
+#    Jika muncul pertanyaan "Would you like to create it?", pilih "yes"
+php artisan migrate --seed
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 5. Hubungkan folder upload foto
+php artisan storage:link
+
+# 6. Pasang & build tampilan (CSS/JS)
+npm install
+npm run build
+```
+
+> Di PowerShell atau Git Bash, ganti `copy` dengan `cp`.
+
+> Project **tidak perlu** ditaruh di folder `htdocs`. Simpan di folder mana saja, misalnya `D:\Projects\cityfix`.
+
+---
+
+## 4. Menjalankan Aplikasi
+
+```sh
+php artisan serve
+```
+
+Buka browser ke **http://localhost:8000**.
+
+Biarkan terminal tetap terbuka selama aplikasi dipakai. Untuk berhenti, tekan `Ctrl + C`.
+
+### Akun Demo
+
+| Peran | Email | Password |
+|---|---|---|
+| Admin | `admin@cityfix.local` | `admin123` |
+| Verifikator | `verifier@cityfix.local` | `password` |
+| Teknisi | `technician@cityfix.local` | `password` |
+| Pelapor | `reporter@cityfix.local` | `password` |
+
+### Sedang mengubah tampilan?
+
+Jika kamu mengedit file di `resources/` dan ingin perubahan langsung terlihat, buka **terminal kedua** dan jalankan:
+
+```sh
+npm run dev
+```
+
+Setelah selesai mengedit, jalankan `npm run build` sekali lagi.
+
+---
+
+## 5. (Opsional) Memakai MySQL dari XAMPP
+
+SQLite sudah cukup untuk belajar. Jika ingin memakai MySQL:
+
+1. Di **XAMPP Control Panel**, klik **Start** pada **MySQL**.
+2. Buka http://localhost/phpmyadmin, buat database baru bernama **`cityfix`**.
+3. Di `php.ini` (lihat langkah 2.2), pastikan `extension=pdo_mysql` aktif.
+4. Buka file `.env`, ubah bagian database menjadi:
+
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=cityfix
+   DB_USERNAME=root
+   DB_PASSWORD=
+   ```
+
+5. Jalankan ulang migrasi:
+
+   ```sh
+   php artisan config:clear
+   php artisan migrate --seed
+   ```
+
+---
+
+## 6. Menjalankan Tes
+
+```sh
+php artisan test
+```
+
+Tes selalu memakai SQLite di memori, jadi tidak mengganggu data aplikasimu dan tidak butuh MySQL.
+
+---
+
+## 7. Mengatasi Masalah Umum
+
+| Pesan error | Penyebab | Solusi |
+|---|---|---|
+| `'php' is not recognized...` | PHP belum ada di PATH | Ulangi langkah 2.1, lalu buka terminal baru |
+| `'composer' is not recognized...` | Composer belum terpasang | Ulangi langkah 2.3, lalu buka terminal baru |
+| `Your requirements could not be resolved...` / `requires php >=8.2` | Versi PHP terlalu lama | Pasang XAMPP dengan PHP 8.2 |
+| `The zip extension and unzip/7z commands are both missing` | Ekstensi `zip` mati | Aktifkan `extension=zip` (langkah 2.2) |
+| `could not find driver (Connection: sqlite...)` | Ekstensi SQLite mati | Aktifkan `pdo_sqlite` dan `sqlite3` (langkah 2.2) |
+| `could not find driver (Connection: mysql...)` | Ekstensi MySQL mati | Aktifkan `extension=pdo_mysql` |
+| `SQLSTATE[HY000] [2002] No connection could be made...` | MySQL belum dinyalakan | Start MySQL di XAMPP Control Panel |
+| `No application encryption key has been specified` | `APP_KEY` kosong | `php artisan key:generate` |
+| `Vite manifest not found` | Tampilan belum di-build | `npm install` lalu `npm run build` |
+| Foto laporan tidak muncul | Folder upload belum dihubungkan | `php artisan storage:link` |
+| `npm` error soal versi Node | Node.js terlalu lama | Pasang Node.js LTS terbaru |
+| `Failed to listen on 127.0.0.1:8000` | Port 8000 sudah dipakai | `php artisan serve --port=8001` |
+
+Setelah mengubah `php.ini` atau `.env`, selalu **tutup dan buka lagi** terminal, lalu jalankan `php artisan config:clear`.
+
+---
+
+## Dokumen Lain
+
+Dokumen desain, pengujian, dan operasional ada di folder [`CITYFIX/`](CITYFIX/).
